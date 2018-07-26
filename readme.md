@@ -63,6 +63,7 @@ Detailed description of each tool can be found in the "Tool Help" or in the "Des
 ------
 ## Known issues
 
-- Geocom Data Management Tools do not support Oracle database.
+- Geocom Database Management Tools do not support Oracle database.
+- Geocom Database Management Tools do not support Esri Workgroup license.
 - The tool "Set spatial index sdebinary" supports only standard Geocom databases. All the customer extensions (e.g. new feature classes or tables) will be ignored.
 - The tool "Set spatial index sdebinary" supports only german database model.
