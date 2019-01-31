@@ -118,6 +118,20 @@ changeSpIndex = """
             CELLS_PER_OBJECT = {cells}, PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = ON, DROP_EXISTING = ON, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, DATA_COMPRESSION = {compression}) ON [PRIMARY];
             """
 
+changeSpIndexAuto = """
+            SET ARITHABORT ON
+            SET CONCAT_NULL_YIELDS_NULL ON
+            SET QUOTED_IDENTIFIER ON
+            SET ANSI_NULLS ON
+            SET ANSI_PADDING ON
+            SET ANSI_WARNINGS ON
+            SET NUMERIC_ROUNDABORT OFF
+            CREATE SPATIAL INDEX [{idxname}] ON [{dbschema}].[{tablename}]
+            ([SHAPE]) USING GEOMETRY_AUTO_GRID
+            WITH (BOUNDING_BOX =({xmin}, {ymin}, {xmax}, {ymax}),
+            CELLS_PER_OBJECT = {cells}, PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = ON, DROP_EXISTING = ON, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, DATA_COMPRESSION = {compression}) ON [PRIMARY];
+            """
+
 getTableId = """
             SELECT registration_id,imv_view_name
             FROM sde.SDE_table_registry
