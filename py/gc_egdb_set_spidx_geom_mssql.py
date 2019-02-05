@@ -74,7 +74,7 @@ def getinstance(workspace):
 '''-------------------------------------------------------------------------------
 # MAIN
 -------------------------------------------------------------------------------'''
-def main(workspace,dbms_admin_pwd,fc,xmin,ymin,xmax,ymax,l1,l2,l3,l4,cells,compression):
+def main(workspace,dbms_admin_pwd,fc,xmin,ymin,xmax,ymax,autogrid,l1,l2,l3,l4,cells,compression):
 
     message(' ')
 
@@ -163,7 +163,7 @@ def main(workspace,dbms_admin_pwd,fc,xmin,ymin,xmax,ymax,l1,l2,l3,l4,cells,compr
                 # ymin = defaultymin
                 # xmax = defaultxmax
                 # ymax = defaultymax
-                
+
             '''
             tableinfo = {}
             key = tablename
@@ -173,7 +173,7 @@ def main(workspace,dbms_admin_pwd,fc,xmin,ymin,xmax,ymax,l1,l2,l3,l4,cells,compr
             tableinfo[key].append(xmax)
             tableinfo[key].append(ymax)
             '''
-            
+
 
             # get the id and the EVW of the table
             sql = gc_sql_utils.getTableId.format(tablename=tablename)
@@ -211,8 +211,14 @@ def main(workspace,dbms_admin_pwd,fc,xmin,ymin,xmax,ymax,l1,l2,l3,l4,cells,compr
             for key,val in indexes.items():
                 try:
                     # change spatial indexes for tables
-                    message('--- change index \"{idx}\" for table \"{table}\" with extent \"{xmin}, {ymin}, {xmax}, {ymax}\"'.format(table=key,idx=val,xmin=xmin,ymin=ymin,xmax=xmax,ymax=ymax))
-                    sql = gc_sql_utils.changeSpIndex.format(idxname=val,dbschema=dbschema,tablename=key,xmin=xmin,ymin=ymin,xmax=xmax,ymax=ymax,l1=l1,l2=l2,l3=l3,l4=l4,cells=cells,compression=compression)
+                    # if autogrid = true then
+                    if autogrid == 'true':
+                        message('--- change autogrid-index \"{idx}\" for table \"{table}\" with extent \"{xmin}, {ymin}, {xmax}, {ymax}\"'.format(table=key,idx=val,xmin=xmin,ymin=ymin,xmax=xmax,ymax=ymax))
+                        sql = gc_sql_utils.changeSpIndexAuto.format(idxname=val,dbschema=dbschema,tablename=key,xmin=xmin,ymin=ymin,xmax=xmax,ymax=ymax,cells=cells,compression=compression)
+                    # if manual grid (autogrid = false)
+                    else:
+                        message('--- change manualgrid-index \"{idx}\" for table \"{table}\" with extent \"{xmin}, {ymin}, {xmax}, {ymax}\"'.format(table=key,idx=val,xmin=xmin,ymin=ymin,xmax=xmax,ymax=ymax))
+                        sql = gc_sql_utils.changeSpIndex.format(idxname=val,dbschema=dbschema,tablename=key,xmin=xmin,ymin=ymin,xmax=xmax,ymax=ymax,l1=l1,l2=l2,l3=l3,l4=l4,cells=cells,compression=compression)
                     if showsqlstatment == True:
                         message(sql)
                     executeSQL(sql,instance,database,dbms_admin,dbms_admin_pwd)
@@ -225,6 +231,7 @@ def main(workspace,dbms_admin_pwd,fc,xmin,ymin,xmax,ymax,l1,l2,l3,l4,cells,compr
             ymin = ''
             xmax = ''
             ymax = ''
+
 
     message(' ')
 
