@@ -18,7 +18,7 @@ Geocom Database Management Tools help to create enterprise geodatabase, set data
 4. Navigate to *Catalog Tree*.
 5. Create a new connection to the folder with the scripts.
 6. Depending on your ArcGIS Desktop version choose appropriate toolbox (only when you use ArcGIS 10.2.x you need to use dedicated toolbox).
-7. Before running the scripts read the chapter "Usage"
+7. Before running the scripts read the chapter "Usage".
 
 
 ------
