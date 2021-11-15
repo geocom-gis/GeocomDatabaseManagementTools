@@ -7,7 +7,7 @@ Geocom Database Management Tools help to create enterprise geodatabase, set data
 ------
 ## Requirements
 
-- Installation of ArcGIS Desktop (10.2 - 10.7.1). 
+- Installation of ArcGIS Desktop (10.2 - 10.8.1). 
 - Installation of a database client software, if you plan working with RDBMS.
 
 ------
